@@ -54,4 +54,17 @@ Wolverine@heroes.example.com",
 Or start over",
             strval($twilioResponse->Message));
     }
+
+    public function testMultipleEmployeesStoreNameOnSession()
+    {
+        $response = $this->call(
+            'POST',
+            '/directory/search/',
+            ['Body' => 'Thor']
+        );
+
+        $this->assertEquals($_SESSION['employees'][0], 'ThorGirl@heroes.example.com');
+        $this->assertEquals($_SESSION['employees'][1], 'FrogThor@heroes.example.com');
+        $this->assertEquals($_SESSION['employees'][2], 'thor@asgard.example.com');
+    }
 }

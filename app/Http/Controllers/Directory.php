@@ -24,6 +24,9 @@ class Directory extends Controller
             return $this->_response($twiml);
         } elseif ($count > 1) {
             $employees = $query->get();
+            $_SESSION["employees"] = $employees->map(function($employee, $key){
+                return $employee->email;
+            });
             $employees_message = $employees->map(function($employee, $key) {
                 $option = $key+1;
                 return "$option for $employee->full_name";
