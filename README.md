@@ -31,7 +31,7 @@ This project is build using [Laravel](http://laravel.com/) web framework;
    $ php artisan key:generate
    ```
 
-1. Generate [SQLite](https://www.sqlite.org/) database.
+1. Generate [SQLite](https://www.sqlite.org/) database file.
 
    ```bash
    $ php TouchDatabase.php
