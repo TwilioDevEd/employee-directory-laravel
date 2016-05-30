@@ -31,6 +31,12 @@ This project is build using [Laravel](http://laravel.com/) web framework;
    $ php artisan key:generate
    ```
 
+1. Generate [SQLite](https://www.sqlite.org/) database.
+
+   ```bash
+   $ php TouchDatabase.php
+   ```
+
 1. Run the migrations.
    ```bash
    $ php artisan migrate
