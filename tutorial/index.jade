@@ -1,0 +1,138 @@
+.chapter(data-title='Employee Directory Laravel')
+  .step(
+    data-title='What Are We Building?',
+    data-file='app/Http/routes.php',
+    data-highlight='22-26')
+    :markdown
+      ## Employee Directory
+
+      Learn how to implement an employee directory that you can query using SMS.
+      Request information from anyone at your company just by sending a text message
+      to a [Twilio Number](//www.twilio.com/help/faq/phone-numbers)
+
+      Here is how it works at a high level:
+
+      - The user sends a SMS with an Employee's name to the Twilio number.
+      - The user receives information for the requested Employee.
+
+      Let's get started!
+
+      ---
+
+      **See Also:**
+      * [Laravel Documentation](//laravel.com/docs/5.2/)
+      * [Getting Started with Twilio and the Laravel Framework for PHP](//www.twilio.com/blog/2014/09/getting-started-with-twilio-and-the-laravel-framework-for-php.html)
+
+  .step(
+    data-title="Handling Twilio's SMS Request",
+    data-file='app/Http/Controllers/Directory.php',
+    data-highlight='13,15-31')
+    :markdown
+      ## Handling Twilio's SMS Request
+
+      When your [Twilio Number](//www.twilio.com/help/faq/phone-numbers) receives
+      an SMS, Twilio will make a POST request to `/directory/search` asking for [TwiML]
+      instructions.
+
+      Once the application identifies one of the 3 possible scenarios
+      (single partial match, multiple partial match or no match),
+      it will send a [TwiML] response to Twilio. This response will instruct Twilio
+      to send an SMS [Message](//www.twilio.com/docs/api/twiml/sms/message)
+      back to the user.
+
+      Let's take a closer look to each one of the scenarios.
+
+      [TwiML]: //www.twilio.com/docs/api/twiml
+
+  .step(
+    data-title="Single Partial Match",
+    data-file='app/Http/Controllers/Directory.php',
+    data-highlight='22-25,48-52')
+    :markdown
+      ## Finding a Single Partial Employee Match
+
+      This is the simplest scenario. We'll verify that only 1 match is
+      obtained. If a single match is found, a message containing this
+      employee's information is built and sent to Twilio as TwiML instructions.
+
+      If multiple matches are found we'll try to do a multiple partial match.
+      That is our next possible scenario.
+
+  .step(
+    data-title="Multiple Partial Match",
+    data-file='app/Http/Controllers/Directory.php',
+    data-highlight='55-69')
+    :markdown
+      ## Finding Multiple Partial Employee Matches
+
+      At this point we have already tried to use the user's query as a single
+      partial match. Now we'll try to get a partial match that returns more
+      than one result. We'll use [Twilio
+      Cookies](//www.twilio.com/blog/2014/07/the-definitive-guide-to-sms-conversation-tracking.html)
+      to store suggestions. The only difference here is that we use a list to
+      store suggestions so that the user can reply with a number that
+      references one of the suggestions in order to get all the employee's
+      information. The way this information is stored will be explained on the
+      next step.
+
+      The last scenario is so simple that a step won't be created for it. If none
+      of the previous scenarios occur, it means that there is no employee in the
+      database that matches the user's query. In that case, a reply will be sent
+      to the user explaining that their query doesn't match any of the employees
+      found on the database.
+
+      ---
+
+      **See Also:**
+      * [Laravel Sessions](//laravel.com/docs/5.1/session)
+
+  .step(
+    data-title="Storing Suggestions With Cookies",
+    data-file='app/Http/Controllers/Directory.php',
+    data-highlight='35,43,59')
+    :markdown
+      ## Storing Suggestions With Cookies
+
+      When a user gets a partial match by searching the employee directory, we
+      reply with one or more suggestions. We need to store this suggestions, so
+      the next time the user sends an SMS we know this is not a query for a new
+      employee, but a selection of one of the suggestions.
+      
+      We'll use [Twilio Cookies][Twilio Cookies] and a [Laravel Session][Laravel
+      Sessions] to store suggestions. They will allow you to [keep track of an
+      SMS conversation][Tracking Conversations] between multiple numbers and
+      your Twilio powered application.
+
+      ---
+
+      **See Also:**
+      * [Laravel Sessions][Laravel Sessions]
+      * [Tracking SMS Conversations][Tracking Conversations]
+      * [Twilio Cookies][Twilio Cookies]
+
+      [Twilio Cookies]: //www.twilio.com/blog/2014/07/the-definitive-guide-to-sms-conversation-tracking.html
+      [Laravel Sessions]: //laravel.com/docs/5.1/session
+      [Tracking Conversations]: //www.twilio.com/docs/quickstart/php/sms/tracking-conversations
+
+  .step
+    :markdown
+      ## Where to next?
+
+      That's it! We have just implemented employee directory using Laravel.
+      Now you can get your employee's information by texting a Twilio number.
+
+      If you're a PHP developer working with Twilio, you might also enjoy these
+      tutorials:
+
+      [**Automated-Survey**](//www.twilio.com/docs/tutorials/walkthrough/automated-survey/php/laravel)
+
+      Instantly collect structured data from your users with a survey conducted
+      over a voice call or SMS text messages. Let's get started!
+
+      [**ETA-Notifications**](//www.twilio.com/docs/tutorials/walkthrough/eta-notifications/php/laravel)
+
+      Learn how to implement ETA Notifications using Laravel and Twilio.
+
+      Thanks for checking this tutorial out! If you have any feedback
+      to share with us, we'd love to hear it.
+      [Contact the Twilio Developer Education Team](mailto:deved-oss@twilio.com) to let us know what you think.

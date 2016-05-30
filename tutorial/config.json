@@ -1,0 +1,6 @@
+{
+    "title": "Employee Directory Laravel",
+    "repo": "TwilioDevEd/employee-directory-laravel",
+    "description": "Use Twilio to accept SMS messages and turn them into queries against a SQLite database. This example functions as an Employee Directory where a mobile phone user can send a text message with a partial string of a person's name and it will return their picture and contact information (e-mail address and phone number).",
+    "heroku": false
+}
