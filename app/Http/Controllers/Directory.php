@@ -14,12 +14,9 @@ class Directory extends Controller
 {
     public function search(Request $request)
     {
-
         $body = $request->input('Body');
         if ($this->isChoiceAnswer($body, $request)) {
-            $email = $request->session()->get('employees')->get($body-1);
-            print $request->session()->get('employees');
-            return $this->singleResult(Employee::where('email', $email));
+            return $this->selectedEmployee($body, $request);
         }
 
         $query = Employee::where('full_name', 'LIKE', '%' . $body . '%');
@@ -31,6 +28,12 @@ class Directory extends Controller
         } else {
             return $this->notFound();
         }
+    }
+
+    private function selectedEmployee($body, $request)
+    {
+        $email = $request->session()->get('employees')->get($body-1);
+        return $this->singleResult(Employee::where('email', $email));
     }
 
     private function isChoiceAnswer($body, $request)
