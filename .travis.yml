@@ -8,8 +8,9 @@ install:
 env:
   global:
     - APP_ENV=testing
+    - APP_KEY=M0HYKpEoPSPnl7V4Ck6notarealkeyUx
 before_script:
   - touch /home/travis/build/TwilioDevEd/employee-directory-laravel/storage/app/database.sqlite
-  - php artisan key:generate
   - php artisan migrate
   - php artisan db:seed
+  
