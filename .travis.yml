@@ -6,6 +6,8 @@ php:
 install:
 - composer install
 env:
+  global:
+    - APP_ENV=testing
 before_script:
   - php artisan migrate
   - php artisan db:seed
