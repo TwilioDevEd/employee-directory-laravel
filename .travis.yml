@@ -9,5 +9,6 @@ env:
   global:
     - APP_ENV=testing
 before_script:
+  - touch /home/travis/build/TwilioDevEd/employee-directory-laravel/storage/app/database.sqlite
   - php artisan migrate
   - php artisan db:seed
