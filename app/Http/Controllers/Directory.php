@@ -16,27 +16,29 @@ class Directory extends Controller
         $name = $request->input('Body');
         $query = Employee::where('full_name', 'LIKE', '%' . $name . '%');
         $count = $query->count();
-        $message_response = new Services_Twilio_Twiml;
+        $twiml = new Services_Twilio_Twiml;
         if ($count === 1) {
             $employee = $query->first();
-            $message_response->message(
-                collect([$employee->full_name, $employee->phone_number, $employee->email])->implode("\n"));
-            return response($message_response, 200)->header('Content-Type', 'application/xml');
+            $twiml->message(collect([$employee->full_name, $employee->phone_number,
+                $employee->email])->implode("\n"));
+            return $this->_response($twiml);
         } elseif ($count > 1) {
             $employees = $query->get();
             $employees_message = $employees->map(function($employee, $key) {
                 $option = $key+1;
                 return "$option for $employee->full_name";
             });
-            $message_response->message(
-                collect(['We found multiple people, reply with:',
-                    $employees_message,
-                    'Or start over'])->flatten()->implode("\n"));
-            return response($message_response, 200)->header('Content-Type', 'application/xml');
+            $twiml->message(collect(['We found multiple people, reply with:',
+                    $employees_message,'Or start over'])->flatten()->implode("\n"));
+            return $this->_response($twiml);
         } else {
-            $message_response->message('We did not find the employee you\'re looking for');
-            return response($message_response, 200)->header('Content-Type', 'application/xml');
+            $twiml->message('We did not find the employee you\'re looking for');
+            return $this->_response($twiml);
         }
     }
 
+    private function _response($twiml)
+    {
+        return response($twiml, 200)->header('Content-Type', 'application/xml');
+    }
 }
