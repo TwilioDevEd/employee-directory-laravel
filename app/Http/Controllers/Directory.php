@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Employee;
 use App\Http\Requests;
+use App\Http\Session;
 use App\Http\Controllers\Controller;
 use Services_Twilio_Twiml;
 
@@ -13,16 +14,30 @@ class Directory extends Controller
 {
     public function search(Request $request)
     {
-        $name = $request->input('Body');
-        $query = Employee::where('full_name', 'LIKE', '%' . $name . '%');
+
+        $body = $request->input('Body');
+        if ($this->isChoiceAnswer($body, $request)) {
+            $email = $request->session()->get('employees')->get($body-1);
+            print $request->session()->get('employees');
+            return $this->singleResult(Employee::where('email', $email));
+        }
+
+        $query = Employee::where('full_name', 'LIKE', '%' . $body . '%');
         $count = $query->count();
         if ($count == 1) {
             return $this->singleResult($query);
         } elseif ($count > 1) {
-            return $this->multipleResults($query);
+            return $this->multipleResults($query, $request);
         } else {
             return $this->notFound();
         }
+    }
+
+    private function isChoiceAnswer($body, $request)
+    {
+        return is_numeric($body) 
+            && in_array(intval($body), 
+                range(1, $request->session()->get("employees")->count()));
     }
 
     private function singleResult($query)
@@ -34,13 +49,13 @@ class Directory extends Controller
         return $this->xmlResponse($twiml);
     }
 
-    private function multipleResults($query)
+    private function multipleResults($query, $request)
     {
         $twiml = new Services_Twilio_Twiml;
         $employees = $query->get();
-        $_SESSION["employees"] = $employees->map(function($employee, $key){
+        $request->session()->put('employees', $employees->map(function($employee, $key){
             return $employee->email;
-        });
+        }));
         $employees_message = $employees->map(function($employee, $key) {
             $option = $key+1;
             return "$option for $employee->full_name";

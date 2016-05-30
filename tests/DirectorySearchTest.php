@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Eloquent\Collection;
 
 class DirectorySearchTest extends TestCase
 {
@@ -63,8 +64,57 @@ Or start over",
             ['Body' => 'Thor']
         );
 
-        $this->assertEquals($_SESSION['employees'][0], 'ThorGirl@heroes.example.com');
-        $this->assertEquals($_SESSION['employees'][1], 'FrogThor@heroes.example.com');
-        $this->assertEquals($_SESSION['employees'][2], 'thor@asgard.example.com');
+        $expected = new Collection;
+        $expected->push('ThorGirl@heroes.example.com');
+        $expected->push('FrogThor@heroes.example.com');
+        $expected->push('thor@asgard.example.com');
+
+        $this->assertSessionHas('employees', $expected);
+    }
+
+    public function testUserChoosesAnOption()
+    {
+        $employees = new Collection;
+        $employees->push('ThorGirl@heroes.example.com');
+        $employees->push('FrogThor@heroes.example.com');
+        $employees->push('thor@asgard.example.com');
+
+        $response = $this
+            ->withSession(['employees' => $employees])
+            ->call(
+            'POST',
+            '/directory/search/',
+            ['Body' => '3']
+        );
+
+        $twilioResponse = new SimpleXMLElement($response->getContent());
+        $this->assertEquals(
+"Thor
++14155559999
+thor@asgard.example.com",
+            strval($twilioResponse->Message));
+    }
+
+    public function testUserChoosesInvalidOption()
+    {
+        $employees = new Collection;
+        $employees->push('ThorGirl@heroes.example.com');
+        $employees->push('FrogThor@heroes.example.com');
+        $employees->push('thor@asgard.example.com');
+
+        $response = $this
+            ->withSession(['employees' => $employees])
+            ->call(
+            'POST',
+            '/directory/search/',
+            ['Body' => '51']
+        );
+
+        $twilioResponse = new SimpleXMLElement($response->getContent());
+        $this->assertEquals(
+"X-51
++14155550804
+X-51@heroes.example.com",
+            strval($twilioResponse->Message));
     }
 }

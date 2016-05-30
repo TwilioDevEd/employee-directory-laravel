@@ -19,10 +19,10 @@ Route::group(['middleware' => ['web']], function () {
         return 'Employee Directory Laravel';
     });
 
-});
+    Route::post(
+        '/directory/search/',
+        ['uses' => 'Directory@search',
+        'as' => 'directory.search']
+    );
 
-Route::post(
-    '/directory/search/',
-    ['uses' => 'Directory@search',
-    'as' => 'directory.search']
-);
+});
