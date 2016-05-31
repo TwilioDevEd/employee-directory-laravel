@@ -5,9 +5,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Database\Eloquent\Collection;
 
-class DirectorySearchTest extends TestCase
+class DirectoryControllerTest extends TestCase
 {
-    use DatabaseTransactions;
 
     public function testEmployeeNotFound()
     {
@@ -88,10 +87,7 @@ Or start over",
         );
 
         $twilioResponse = new SimpleXMLElement($response->getContent());
-        $this->assertEquals(
-"Thor
-+14155559999
-thor@asgard.example.com",
+        $this->assertEquals("Thor\n+14155559999\nthor@asgard.example.com",
             strval($twilioResponse->Message));
     }
 
@@ -111,10 +107,7 @@ thor@asgard.example.com",
         );
 
         $twilioResponse = new SimpleXMLElement($response->getContent());
-        $this->assertEquals(
-"X-51
-+14155550804
-X-51@heroes.example.com",
+        $this->assertEquals("X-51\n+14155550804\nX-51@heroes.example.com",
             strval($twilioResponse->Message));
     }
 }

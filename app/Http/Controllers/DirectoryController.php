@@ -10,7 +10,7 @@ use App\Http\Session;
 use App\Http\Controllers\Controller;
 use Services_Twilio_Twiml;
 
-class Directory extends Controller
+class DirectoryController extends Controller
 {
     public function search(Request $request)
     {
@@ -32,7 +32,7 @@ class Directory extends Controller
 
     private function selectedEmployee($body, $request)
     {
-        $email = $request->session()->get('employees')->get($body-1);
+        $email = $request->session()->get('employees')->get($body - 1);
         return $this->singleResult(Employee::where('email', $email));
     }
 
@@ -60,11 +60,11 @@ class Directory extends Controller
             return $employee->email;
         }));
         $employees_message = $employees->map(function($employee, $key) {
-            $option = $key+1;
+            $option = $key + 1;
             return "$option for $employee->full_name";
         });
         $twiml->message(collect(['We found multiple people, reply with:',
-                $employees_message,'Or start over'])->flatten()->implode("\n"));
+                $employees_message, 'Or start over'])->flatten()->implode("\n"));
         return $this->xmlResponse($twiml);
     }
 
