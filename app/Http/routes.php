@@ -21,7 +21,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::post(
         '/directory/search/',
-        ['uses' => 'Directory@search',
+        ['uses' => 'DirectoryController@search',
         'as' => 'directory.search']
     );
 
