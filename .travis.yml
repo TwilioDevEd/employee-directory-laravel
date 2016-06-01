@@ -13,3 +13,4 @@ before_script:
   - php TouchDatabase.php
   - php artisan migrate
   - php artisan db:seed
+  - ./vendor/bin/phpcs --standard=twilio_ruleset.xml --extensions=php .
