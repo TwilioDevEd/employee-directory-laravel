@@ -45,11 +45,11 @@
       [TwiML]: //www.twilio.com/docs/api/twiml
 
   .step(
-    data-title="Single Partial Match",
+    data-title="Finding a Single Partial Match",
     data-file='app/Http/Controllers/Directory.php',
     data-highlight='22-25,48-52')
     :markdown
-      ## Finding a Single Partial Employee Match
+      ## Finding a Single Partial Match
 
       This is the simplest scenario. We'll verify that only 1 match is
       obtained. If a single match is found, a message containing this
@@ -59,11 +59,11 @@
       That is our next possible scenario.
 
   .step(
-    data-title="Multiple Partial Match",
+    data-title="Finding Multiple Partial Matches",
     data-file='app/Http/Controllers/Directory.php',
     data-highlight='55-69')
     :markdown
-      ## Finding Multiple Partial Employee Matches
+      ## Finding Multiple Partial Matches
 
       At this point we have already tried to use the user's query as a single
       partial match. Now we'll try to get a partial match that returns more
@@ -71,9 +71,9 @@
       Cookies](//www.twilio.com/blog/2014/07/the-definitive-guide-to-sms-conversation-tracking.html)
       to store suggestions. The only difference here is that we use a list to
       store suggestions so that the user can reply with a number that
-      references one of the suggestions in order to get all the employee's
-      information. The way this information is stored will be explained on the
-      next step.
+      references one of the suggestions in order to get the employee's
+      complete information. The way this information is stored will be explained
+      on the next step.
 
       The last scenario is so simple that a step won't be created for it. If none
       of the previous scenarios occur, it means that there is no employee in the
@@ -93,11 +93,11 @@
     :markdown
       ## Storing Suggestions With Cookies
 
-      When a user gets a partial match by searching the employee directory, we
-      reply with one or more suggestions. We need to store this suggestions, so
-      the next time the user sends an SMS we know this is not a query for a new
-      employee, but a selection of one of the suggestions.
-      
+      When a user gets a partial match by searching the Employees Directory, we
+      reply with one or more suggestions. We need to store these suggestions.
+      This way the next time the user sends an SMS we know this is not a query
+      for a new employee, but a selection of one of the suggestions.
+
       We'll use [Twilio Cookies][Twilio Cookies] and a [Laravel Session][Laravel
       Sessions] to store suggestions. They will allow you to [keep track of an
       SMS conversation][Tracking Conversations] between multiple numbers and
@@ -127,7 +127,7 @@
       [**Automated-Survey**](//www.twilio.com/docs/tutorials/walkthrough/automated-survey/php/laravel)
 
       Instantly collect structured data from your users with a survey conducted
-      over a voice call or SMS text messages. Let's get started!
+      over a call or SMS text messages. Let's get started!
 
       [**ETA-Notifications**](//www.twilio.com/docs/tutorials/walkthrough/eta-notifications/php/laravel)
 
