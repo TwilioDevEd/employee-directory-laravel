@@ -17,12 +17,14 @@ class EmployeesTableSeeder extends Seeder
         $json = File::get("database/data/employees.json");
         $data = json_decode($json);
         foreach ($data as $obj) {
-          Employee::create(array(
-            'full_name' => $obj->fullName,
-            'email' => $obj->email,
-            'phone_number' => $obj->phoneNumber,
-            'image_url' => $obj->imageUrl
-          ));
+            Employee::create(
+                array(
+                    'full_name'    => $obj->fullName,
+                    'email'        => $obj->email,
+                    'phone_number' => $obj->phoneNumber,
+                    'image_url'    => $obj->imageUrl
+                )
+            );
         }
     }
 }

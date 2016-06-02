@@ -16,9 +16,11 @@ class DirectoryControllerTest extends TestCase
             ['Body' => 'Yyy']
         );
         $twilioResponse = new SimpleXMLElement($response->getContent());
-        
-        $this->assertEquals('We did not find the employee you\'re looking for',
-            strval($twilioResponse->Message));
+
+        $this->assertEquals(
+            'We did not find the employee you\'re looking for',
+            strval($twilioResponse->Message)
+        );
     }
 
     public function testOneEmployeeFound()
@@ -31,10 +33,11 @@ class DirectoryControllerTest extends TestCase
         $twilioResponse = new SimpleXMLElement($response->getContent());
 
         $this->assertEquals(
-"Wolverine
-+14155559718
-Wolverine@heroes.example.com",
-            strval($twilioResponse->Message));
+            "Wolverine\n"
+                . "+14155559718\n"
+                . "Wolverine@heroes.example.com",
+            strval($twilioResponse->Message)
+        );
     }
 
     public function testMultipleEmployeesFound()
@@ -47,12 +50,13 @@ Wolverine@heroes.example.com",
         $twilioResponse = new SimpleXMLElement($response->getContent());
 
         $this->assertEquals(
-"We found multiple people, reply with:
-1 for Thor Girl
-2 for Frog Thor
-3 for Thor
-Or start over",
-            strval($twilioResponse->Message));
+            "We found multiple people, reply with:\n"
+                . "1 for Thor Girl\n"
+                . "2 for Frog Thor\n"
+                . "3 for Thor\n"
+                . "Or start over",
+            strval($twilioResponse->Message)
+        );
     }
 
     public function testMultipleEmployeesStoreNameOnSession()
@@ -81,14 +85,16 @@ Or start over",
         $response = $this
             ->withSession(['employees' => $employees])
             ->call(
-            'POST',
-            '/directory/search/',
-            ['Body' => '3']
-        );
+                'POST',
+                '/directory/search/',
+                ['Body' => '3']
+            );
 
         $twilioResponse = new SimpleXMLElement($response->getContent());
-        $this->assertEquals("Thor\n+14155559999\nthor@asgard.example.com",
-            strval($twilioResponse->Message));
+        $this->assertEquals(
+            "Thor\n+14155559999\nthor@asgard.example.com",
+            strval($twilioResponse->Message)
+        );
     }
 
     public function testUserChoosesInvalidOption()
@@ -101,13 +107,15 @@ Or start over",
         $response = $this
             ->withSession(['employees' => $employees])
             ->call(
-            'POST',
-            '/directory/search/',
-            ['Body' => '51']
-        );
+                'POST',
+                '/directory/search/',
+                ['Body' => '51']
+            );
 
         $twilioResponse = new SimpleXMLElement($response->getContent());
-        $this->assertEquals("X-51\n+14155550804\nX-51@heroes.example.com",
-            strval($twilioResponse->Message));
+        $this->assertEquals(
+            "X-51\n+14155550804\nX-51@heroes.example.com",
+            strval($twilioResponse->Message)
+        );
     }
 }
