@@ -6,7 +6,11 @@
 
 [![Build Status](https://travis-ci.org/TwilioDevEd/employee-directory-laravel.svg?branch=master)](https://travis-ci.org/TwilioDevEd/employee-directory-laravel)
 
-Use Twilio to accept SMS messages and turn them into queries against a database. This example functions as an Employee Directory where a mobile phone user can send a text message with a partial string of a person's name and it will return their picture and contact information (e-mail address and phone number).
+Use Twilio to accept SMS messages and turn them into queries against a database.
+These are example functions on how to implement an Employee Directory, where a mobile
+phone user can obtain information by sending a text message with a partial string
+of a person's name, and it will return their picture and contact information
+(e-mail address and phone number).
 
 ## Local Development
 
@@ -90,6 +94,7 @@ This project is build using [Laravel](http://laravel.com/) web framework;
 ### How To Demo
 
 1. Text your twilio number the name "Thor".
+
 1. Should get the following response:
 
    ```
@@ -99,7 +104,9 @@ This project is build using [Laravel](http://laravel.com/) web framework;
    3 for Thor Girl
    Or start over
    ```
-1. Reply with 1.
+
+1. Reply with the chosen option, for example "1".
+
 1. Should get the following response:
 
    ```
