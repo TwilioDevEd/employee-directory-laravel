@@ -8,7 +8,7 @@ use App\Employee;
 use App\Http\Requests;
 use App\Http\Session;
 use App\Http\Controllers\Controller;
-use Services_Twilio_Twiml;
+use Twilio\Twiml;
 
 class DirectoryController extends Controller
 {
@@ -47,7 +47,7 @@ class DirectoryController extends Controller
 
     private function _singleResult($query)
     {
-        $twiml = new Services_Twilio_Twiml;
+        $twiml = new Twiml;
         $employee = $query->first();
             $twiml->message(
                 collect(
@@ -60,7 +60,7 @@ class DirectoryController extends Controller
 
     private function _multipleResults($query, $request)
     {
-        $twiml = new Services_Twilio_Twiml;
+        $twiml = new Twiml;
         $employees = $query->get();
         $request->session()->put(
             'employees', $employees->map(
@@ -86,7 +86,7 @@ class DirectoryController extends Controller
 
     private function _notFound()
     {
-        $twiml = new Services_Twilio_Twiml;
+        $twiml = new Twiml;
         $twiml->message('We did not find the employee you\'re looking for');
         return $this->_xmlResponse($twiml);
     }
