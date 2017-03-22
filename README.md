@@ -114,7 +114,7 @@ This project is build using [Laravel](http://laravel.com/) web framework;
    +14155559999
    thor@asgard.example.com
    [the image goes here]
-  ```
+   ```
 
 ## Meta
 
