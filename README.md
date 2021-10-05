@@ -29,6 +29,11 @@ This project is build using [Laravel](http://laravel.com/) web framework;
    $ composer install
    ```
 
+1. Copy the sample configuration file and set your environment variables
+   ```bash
+   $ cp .env.example .env
+   ```
+
 1. Generate an `APP_KEY`.
 
    ```bash
