@@ -94,7 +94,7 @@ This project is build using [Laravel](http://laravel.com/) web framework;
   http://<sub-domain>.ngrok.io/directory/search
   ```
 
-  ![Configure SMS](http://howtodocs.s3.amazonaws.com/twilio-number-config-all-med.gif)
+   [Learn how to configure your Twilio phone number for SMS](https://support.twilio.com/hc/en-us/articles/223136047-Configure-a-Twilio-Phone-Number-to-Receive-and-Respond-to-Messages#h_5fd3801f-8241-421f-ad0f-8fb6c25ba68c)
 
 ### How To Demo
 
